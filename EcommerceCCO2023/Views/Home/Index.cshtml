@@ -3,6 +3,18 @@
     <!-- Partial View para exibir o Carousel -->
     <partial name="_Carousel" />
 
+<div class="btn-group">
+    <button id="btnOrdenar" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Ordenar
+    </button>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" asp-action="OrdenarPorPreco">Por Preço</a>
+        <a class="dropdown-item" asp-action="OrdenarPorNome">Por Nome</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" asp-action="OrdenarDecrescente">Decrescente</a>
+    </div>
+</div>
+
     <h2>Seu Preferidos! </h2>
     <h4>vai mais um ai? </h4>
 
@@ -13,3 +25,15 @@
             <partial name="_ProdutoResumo" for="@lanche" />
         }
     </div>
+
+@*@section scripts {
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.dropdown-item').on('click', function () {
+                var opcao = $(this).text();
+                $('#btnOrdenar').html('Ordenar por ' + opcao);
+            });
+        });
+    </script>
+}*@

@@ -23,20 +23,22 @@ namespace EcommerceCCO2023.Models.Data
                 produto.Quantidade + ", " +
                 produto.Valor + ", '" +
                 produto.UrlImagem + "', " +
-                produto.Status +", " +
+                produto.Status + ", " +
                 produto.Categoria.IdCategoria;
 
             try
             {
                 // criar um objeto para conectar com o BD
-                SqlConnection conexaoBD = Data.ConectarBancoDados();
-                // criar um objeto para executar o comando SQL
-                SqlCommand cmd = new SqlCommand(insert, conexaoBD);
-
-                if (cmd.ExecuteNonQuery() == 1)
+                using (SqlConnection conexaoBD = Data.ConectarBancoDados())
                 {
-                    Data.fecharConexaoBancoDados();
-                    sucesso = true;
+                    // criar um objeto para executar o comando SQL
+                    using (SqlCommand cmd = new SqlCommand(insert, conexaoBD))
+                    {
+                        if (cmd.ExecuteNonQuery() == 1)
+                        {
+                            sucesso = true;
+                        }
+                    }
                 }
             }
             catch (SqlException erro)
@@ -55,45 +57,48 @@ namespace EcommerceCCO2023.Models.Data
             // declarar a string SQL para fazer a consulta
             // dos dados de todos os Produto 
             string select = "select * from v_Produto";
-            
+
             try
-            {                
+            {
                 // Conexão com  o BD
-                SqlConnection conexaoBD = Data.ConectarBancoDados();
-                // Comando que executa o SQL no BD
-                SqlCommand cmd = new SqlCommand(select, conexaoBD);
-                // Execução do select
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                // instancão a lista
-                lista = new List<Produto>();
-
-                while (reader.Read())
-                {                                      
-                    Produto prod = new Produto();
-                    prod.IdProduto = (int)reader["idProduto"];
-                    prod.NomeProd = reader["NomeProd"].ToString();
-                    prod.Descricao = reader["Descricao"].ToString();
-                    prod.Quantidade = (int)reader["QtdProd"];
-                    prod.Valor =  (decimal) reader["Valor"];
-                    if (!reader.IsDBNull(5))
+                using (SqlConnection conexaoBD = Data.ConectarBancoDados())
+                {
+                    // Comando que executa o SQL no BD
+                    using (SqlCommand cmd = new SqlCommand(select, conexaoBD))
                     {
-                        prod.UrlImagem = reader["UrlImg"].ToString();
+                        // Execução do select
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            // instancão a lista
+                            lista = new List<Produto>();
+
+                            while (reader.Read())
+                            {
+                                Produto prod = new Produto();
+                                prod.IdProduto = (int)reader["idProduto"];
+                                prod.NomeProd = reader["NomeProd"].ToString();
+                                prod.Descricao = reader["Descricao"].ToString();
+                                prod.Quantidade = (int)reader["QtdProd"];
+                                prod.Valor = (decimal)reader["Valor"];
+                                if (!reader.IsDBNull(5))
+                                {
+                                    prod.UrlImagem = reader["UrlImg"].ToString();
+                                }
+                                prod.Categoria.IdCategoria = (int)reader["IdCategoria"];
+                                prod.Categoria.NomeCategoria = reader["Categoria"].ToString();
+                                lista.Add(prod);
+                            }
+                        }
                     }
-                    prod.Categoria.IdCategoria = (int)reader["IdCategoria"];
-                    prod.Categoria.NomeCategoria = reader["Categoria"].ToString();
-                    lista.Add(prod);
                 }
-            } 
+            }
             catch (SqlException erro)
             {
                 Console.WriteLine("\n\n\n Erro Produto " + erro + "\n\n\n");
             }
-          
+
             return lista;
         }
-
-
 
         // método read para consultar o produto pelo seu id
         public Produto Read(int id)
@@ -102,31 +107,45 @@ namespace EcommerceCCO2023.Models.Data
             // dos dados do Produto pelo seu id
             string select = "select * from v_Produto " +
                 "where idProduto = " + id;
-            // Conexão com  o BD
-            SqlConnection conexaoBD = Data.ConectarBancoDados();
-            // Comando que executa o SQL no BD
-            SqlCommand cmd = new SqlCommand(select, conexaoBD);
-            // Execução do select
-            SqlDataReader reader = cmd.ExecuteReader();
-            Produto prod = null;
-            if(reader.Read())
-            {
-                prod = new Produto();
-                prod.IdProduto = (int)reader["idProduto"];
-                prod.NomeProd = reader["NomeProd"].ToString();
-                prod.Descricao = reader["Descricao"].ToString();
-                prod.Quantidade = (int)reader["QtdProd"];
-                prod.Valor = (decimal)reader["Valor"];
-                if (!reader.IsDBNull(5))
-                {
-                    prod.UrlImagem = reader["UrlImg"].ToString();
-                }
-                prod.Status = (int)reader["Status"];
-                prod.Categoria.IdCategoria = (int)reader["IdCategoria"];
-                prod.Categoria.NomeCategoria = reader["Categoria"].ToString();
 
+            try
+            {
+                // Conexão com  o BD
+                using (SqlConnection conexaoBD = Data.ConectarBancoDados())
+                {
+                    // Comando que executa o SQL no BD
+                    using (SqlCommand cmd = new SqlCommand(select, conexaoBD))
+                    {
+                        // Execução do select
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            Produto prod = null;
+                            if (reader.Read())
+                            {
+                                prod = new Produto();
+                                prod.IdProduto = (int)reader["idProduto"];
+                                prod.NomeProd = reader["NomeProd"].ToString();
+                                prod.Descricao = reader["Descricao"].ToString();
+                                prod.Quantidade = (int)reader["QtdProd"];
+                                prod.Valor = (decimal)reader["Valor"];
+                                if (!reader.IsDBNull(5))
+                                {
+                                    prod.UrlImagem = reader["UrlImg"].ToString();
+                                }
+                                prod.Status = (int)reader["Status"];
+                                prod.Categoria.IdCategoria = (int)reader["IdCategoria"];
+                                prod.Categoria.NomeCategoria = reader["Categoria"].ToString();
+                            }
+                            return prod;
+                        }
+                    }
+                }
             }
-            return prod;
+            catch (SqlException erro)
+            {
+                Console.WriteLine("\n\n\n Erro Produto " + erro + "\n\n\n");
+                return null; // Ou tratar o erro de acordo com a lógica da sua aplicação
+            }
         }
 
         // método update para atualizar dados do produto
@@ -149,14 +168,16 @@ namespace EcommerceCCO2023.Models.Data
             try
             {
                 // criar um objeto para conectar com o BD
-                SqlConnection conexaoBD = Data.ConectarBancoDados();
-                // criar um objeto para executar o comando SQL
-                SqlCommand cmd = new SqlCommand(update, conexaoBD);
-
-                if (cmd.ExecuteNonQuery() == 1)
+                using (SqlConnection conexaoBD = Data.ConectarBancoDados())
                 {
-                    Data.fecharConexaoBancoDados();
-                    sucesso = true;
+                    // criar um objeto para executar o comando SQL
+                    using (SqlCommand cmd = new SqlCommand(update, conexaoBD))
+                    {
+                        if (cmd.ExecuteNonQuery() == 1)
+                        {
+                            sucesso = true;
+                        }
+                    }
                 }
             }
             catch (SqlException erro)
@@ -174,15 +195,25 @@ namespace EcommerceCCO2023.Models.Data
             // dos dados do Produto pelo seu id
             string delete = "delete from Produtos " +
                 "where idProduto = " + id;
-            // Conexão com  o BD
-            SqlConnection conexaoBD = Data.ConectarBancoDados();
-            // Comando que executa o SQL no BD
-            SqlCommand cmd = new SqlCommand(delete, conexaoBD);
-            
-            if (cmd.ExecuteNonQuery() == 1)
+
+            try
             {
-                Data.fecharConexaoBancoDados();
-                sucesso = true;
+                // Conexão com  o BD
+                using (SqlConnection conexaoBD = Data.ConectarBancoDados())
+                {
+                    // Comando que executa o SQL no BD
+                    using (SqlCommand cmd = new SqlCommand(delete, conexaoBD))
+                    {
+                        if (cmd.ExecuteNonQuery() == 1)
+                        {
+                            sucesso = true;
+                        }
+                    }
+                }
+            }
+            catch (SqlException erro)
+            {
+                Console.WriteLine("\n\n Erro de exclusão do Produto " + erro);
             }
             return sucesso;
         }

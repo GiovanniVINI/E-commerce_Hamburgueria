@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EcommerceCCO2023.Models.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,5 +20,6 @@ namespace EcommerceCCO2023.Models
         {
 
         }
+
     }
 }

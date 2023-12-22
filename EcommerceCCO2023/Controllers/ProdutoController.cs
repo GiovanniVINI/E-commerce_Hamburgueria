@@ -1,6 +1,7 @@
 ﻿using EcommerceCCO2023.Models;
 using EcommerceCCO2023.Models.Data;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace EcommerceCCO2023.Controllers
 {

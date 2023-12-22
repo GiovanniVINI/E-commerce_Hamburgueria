@@ -25,6 +25,13 @@ namespace EcommerceCCO2023.Controllers
             return View(data.Read());
         }
 
+        public IActionResult OrdenarPorPreco()
+        {
+            ProdutoData data = new ProdutoData();
+            var produtosOrdenadosPorPreco = data.Read().OrderBy(p => p.Valor).ToList();
+            return View("Index", produtosOrdenadosPorPreco);
+        }
+
         public IActionResult Privacy()
         {
             return View();

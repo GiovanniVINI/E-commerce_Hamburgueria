@@ -5,21 +5,21 @@ namespace EcommerceCCO2023.Models.Data
 {
     public class Data
     {
-        
-        // conexão usando autenticação do Windows
+
+        //conexão usando autenticação do windows
         private static string stringConexao =
-            @"Data source = YOGA-VALERIA;
-            Initial Catalog = Lanches_LP_CCO2023;
-            Integrated Security = true;";
+            @"data source = BOOK-QBT8MS5KSI\MSSQLSERVER09;
+            initial catalog = lanches_lp_cco2023;
+            integrated security = true;";
 
         // conexão usando autenticação do SQL Server
-        /*
-        private static string stringConexao = 
-            @"Data source = localhost; 
-            Initial Catalog = Lanches_LP_CCO2023; 
-            User ID = computacao; 
-            Password = aa11++--;";
-       */
+
+        /*private static string stringConexao =
+            @"data source = localhost; 
+            initial catalog = lanches_lp_cco2023; 
+            user id = computacao; 
+            password = aa11++--;";
+        */
 
         // declaração do objeto conexaoBD e inicializando
         // com null
@@ -29,34 +29,28 @@ namespace EcommerceCCO2023.Models.Data
         // com o Banco de Dados
         public static SqlConnection ConectarBancoDados()
         {
-            // Instanciando o objeto conexaoBD e passando
-            // para o Construtor da classe SqlConnection
-            // o parâmetro stringSQL para fazer a
-            // conexão com o Banco de Dados
             conexaoBD = new SqlConnection(stringConexao);
 
             try
             {
-                // Abrir o Banco de Dados
+                Console.WriteLine($"Estado antes de abrir: {conexaoBD.State}");
                 conexaoBD.Open();
                 Console.WriteLine("Conexão OK");
+                Console.WriteLine($"Estado após abrir: {conexaoBD.State}");
             }
             catch (SqlException erro)
-            {  
-                // ocorrreu erro na conexão com o Banco de Dados
-                conexaoBD = null;                
+            {
+                conexaoBD = null;
                 Console.WriteLine("Conexão Error :" + erro);
             }
-            
-            // retorna a conexão com Banco de Dados se deu certo
-            // ou retorna null se não foi possível conectar com
-            // o Banco de Dados
+
             return conexaoBD;
         }
 
+
         public static void fecharConexaoBancoDados()
         {
-            if (conexaoBD != null)
+            if (conexaoBD != null && conexaoBD.State == System.Data.ConnectionState.Open)
             {
                 conexaoBD.Close();
             }
