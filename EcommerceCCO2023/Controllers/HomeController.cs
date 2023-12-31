@@ -2,11 +2,8 @@
 using EcommerceCCO2023.Models.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace EcommerceCCO2023.Controllers
 {
@@ -25,11 +22,25 @@ namespace EcommerceCCO2023.Controllers
             return View(data.Read());
         }
 
-        public IActionResult OrdenarPorPreco()
+        public IActionResult OrdenarPorPrecoCrescente()
         {
             ProdutoData data = new ProdutoData();
             var produtosOrdenadosPorPreco = data.Read().OrderBy(p => p.Valor).ToList();
             return View("Index", produtosOrdenadosPorPreco);
+        }
+
+        public IActionResult OrdenarPorPrecoDecrescente()
+        {
+            ProdutoData data = new ProdutoData();
+            var produtosOrdenadosPorPreco = data.Read().OrderByDescending(p => p.Valor).ToList();
+            return View("Index", produtosOrdenadosPorPreco);
+        }
+
+        public IActionResult OrdenarPorNome()
+        {
+            ProdutoData data = new ProdutoData();
+            var produtosOrdemAlfabetica = data.Read().OrderBy(p => p.NomeProd).ToList();
+            return View("Index", produtosOrdemAlfabetica);
         }
 
         public IActionResult Privacy()

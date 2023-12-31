@@ -5,7 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Home\IndexAdmin.cshtml" />
     <Content Remove="Views\Produto\CadastrarProduto.cshtml" />
+    <Content Remove="Views\Shared\_LayoutAdmin.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

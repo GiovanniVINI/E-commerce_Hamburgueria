@@ -1,11 +1,7 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
-}
+
 
 /* Provide sufficient contrast against white background */
 a {
@@ -29,8 +25,7 @@ a {
   border-color: #1861ac;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
+
 html {
   font-size: 14px;
 }
@@ -58,24 +53,96 @@ button.accept-policy {
 
 /* Sticky footer styles
 -------------------------------------------------- */
-html, body {
+
+html {
+    height: 100vh;
     margin: 0;
     padding: 0;
-    height: 100%;
 }
 
 body {
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    min-height: 100%;
     margin: 0;
+    padding: 0;
 }
 
+
+button.button-header {
+  background-color: #c9c5c5;
+  border: none;
+  border-radius: 30px;
+  outline: none;
+  cursor: pointer; /* Add this for visual feedback */
+}
+
+    button.button-header:hover {
+        background-color: #e4e4e4;
+        color: #e6dada; /* Adjust if needed */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow effect */
+    }
+
+
+/*.card {
+    box-shadow: 4px 6px 13px -3px rgba(79, 55, 55, 0.75);
+    -webkit-box-shadow: 4px 6px 13px -3px rgba(79, 55, 55, 0.75);
+    -moz-box-shadow: 4px 6px 13px -3px rgba(79, 55, 55, 0.75);
+    background-color: #ededed;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    gap: 2rem;
+    
+}
+*/
+
 main {
+    padding: 20px;
     flex: 1;
 }
 
-.footer {
-    margin-top: auto;
-    padding: 5px
+
+
+footer {
+    background: #111;
+    letter-spacing: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+
+div.footer-bottom {
+    padding: 25px;
+    text-align: center;
+}
+
+div.footer-bottom p {
+    color: #ab9999;
+    font-size: 14px;
+    word-spacing: 2px;
+    text-transform: capitalize;
+    margin: 0;
+}
+
+div.footer-bottom span {
+    opacity: .6;
+    font-weight: 400;
+}
+
+div.btn-footer {
+    position: absolute;
+    right: 40px;
+    gap: 0.7rem;
+    display: flex;
+}
+
+div.btn-footer a {
+    color: #ab9999;
+}
+
+div.btn-footer a:hover {
+    color: #e5e5e5;
 }

@@ -1,30 +1,42 @@
 ﻿@model List<Produto>
+<link rel="stylesheet" href="/css/home.css" />
 
-    <!-- Partial View para exibir o Carousel -->
-    <partial name="_Carousel" />
+<!-- Partial View para exibir o Carousel -->
+<partial name="_Carousel" />
 
-<div class="btn-group">
-    <button id="btnOrdenar" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Ordenar
-    </button>
-    <div class="dropdown-menu">
-        <a class="dropdown-item" asp-action="OrdenarPorPreco">Por Preço</a>
-        <a class="dropdown-item" asp-action="OrdenarPorNome">Por Nome</a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" asp-action="OrdenarDecrescente">Decrescente</a>
+
+<div class="title-container">
+    <div class="breadcrumbs">
+        <a asp-action="IndexLogin" asp-controller="Login">Início</a>
+        <span class="breadcrumb-divider">/</span>
+        <span class="breadcrumb-crumb active">Cardápio</span>
+    </div>
+    <div>
+        <h1>Cardápio</h1>
     </div>
 </div>
 
-    <h2>Seu Preferidos! </h2>
-    <h4>vai mais um ai? </h4>
-
-    <div class="row">
-        <!-- Usando a Partial View para exibir os lanches preferidos -->
-        @foreach (var lanche in Model)
-        {
-            <partial name="_ProdutoResumo" for="@lanche" />
-        }
+<div class="text-right">
+    <button id="btnOrdenar" type="button" class="btn btn-dark btn-outline-light border-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Ordenar
+    </button>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" asp-action="OrdenarPorPrecoCrescente">Preço - Crescente</a>
+        <a class="dropdown-item" asp-action="OrdenarPorPrecoDecrescente">Preço - Decrescente</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" asp-action="OrdenarPorNome">A - Z</a>
     </div>
+</div>
+
+
+
+<div class="row">
+    <!-- Usando a Partial View para exibir os lanches preferidos -->
+    @foreach (var lanche in Model)
+    {
+        <partial name="_ProdutoResumo" for="@lanche" />
+    }
+</div>
 
 @*@section scripts {
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

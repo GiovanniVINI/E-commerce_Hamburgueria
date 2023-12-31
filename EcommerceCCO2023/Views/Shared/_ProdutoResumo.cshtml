@@ -1,28 +1,26 @@
 ﻿@model Produto
-<!-- Criando duas colunas de tamanho 6 que podem funcionar em
-                3 tipos de dispositivos: peq., med., grd -->
 
-<div class="col-sm-4 col-md-4 col-lg-4">
-    <p><img src="~/images/@Model.UrlImagem" alt = "@Model.UrlImagem"class="img-fluid"></p>
-    <h3>Preço: @Model.Valor.ToString("c")</h3>
-
-    <!-- Nome do lanche é link para mostrar a descrição detalhado do Lanche -->
-    <a asp-controller="Lanche" asp-action="Details"
-       asp-route-lancheId="@Model.IdProduto">
-        @Model.NomeProd
-    </a>
-
-    <p>@Model.Descricao</p>
-
-    <!-- Botão para adicionar o lanche selecionado ao Carrinho de Compra -->
-    <div>
-        <p class="button">
-            <a class="btn btn-primary" id="carButton"
-               asp-controller="CarrinhoCompra"
-               asp-action="AdicionarItemAoCarrinhoCompra"
-               asp-route-LancheId="@Model.IdProduto">
-                Incluir no carrinho
+<div class="col-lg-4 mb-4">
+    <div class="card h-100">
+        <img src="~/images/@Model.UrlImagem" alt="@Model.UrlImagem" class="card-img-top img-fluid rounded">
+        <div class="card-body d-flex flex-column">
+            <a asp-controller="Lanche" asp-action="Details" asp-route-lancheId="@Model.IdProduto" class="text-decoration-none">
+                <h4 class="card-title text-dark">@Model.NomeProd</h4>
             </a>
-        </p>
+
+            <p class="card-text text-muted h-100">@Model.Descricao</p>
+
+            <p class="card-text text-danger">Preço: @Model.Valor.ToString("c")</p>
+
+            <div class="mt-auto">
+                <a class="btn btn-dark" id="carButton"
+                   asp-controller="CarrinhoCompra"
+                   asp-action="AdicionarItemAoCarrinhoCompra"
+                   asp-route-LancheId="@Model.IdProduto">
+                    Incluir no carrinho
+                </a>
+            </div>
+        </div>
     </div>
 </div>
+

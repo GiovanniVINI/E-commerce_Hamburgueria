@@ -1,0 +1,51 @@
+﻿@model List<Produto>
+<link rel="stylesheet" href="/css/home.css" />
+
+<!-- Partial View para exibir o Carousel -->
+<partial name="_Carousel" />
+
+
+<div class="title-container">
+    <div class="breadcrumbs">
+        <a asp-action="IndexAdmin" asp-controller="Login">Início</a>
+        <span class="breadcrumb-divider">/</span>
+        <span class="breadcrumb-crumb active">Cardápio</span>
+    </div>
+    <div>
+        <h1>Cardápio</h1>
+    </div>
+</div>
+
+<div class="text-right">
+    <button id="btnOrdenar" type="button" class="btn btn-dark btn-outline-light border-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Ordenar
+    </button>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" asp-action="OrdenarPorPrecoCrescente">Preço - Crescente</a>
+        <a class="dropdown-item" asp-action="OrdenarPorPrecoDecrescente">Preço - Decrescente</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" asp-action="OrdenarPorNome">A - Z</a>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <!-- Usando a Partial View para exibir os lanches preferidos -->
+    @foreach (var lanche in Model)
+    {
+        <partial name="_ProdutoResumo" for="@lanche" />
+    }
+</div>
+
+@*@section scripts {
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.dropdown-item').on('click', function () {
+                var opcao = $(this).text();
+                $('#btnOrdenar').html('Ordenar por ' + opcao);
+            });
+        });
+    </script>
+}*@

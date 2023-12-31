@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] Oh my Dog!</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Oh my Dog!</a>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        @if (ViewData.ContainsKey("isAdmin") && (bool)ViewData["isAdmin"])
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Produto" asp-action="IndexProd">Produto</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Cliente" asp-action="IndexCli">Clientes</a>
+                            </li>
+                        }
+                     
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <button id="btnOrdenar" type="button" class="button-header" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user" style="color: #fff;"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" asp-action="IndexLogin" asp-controller="Login">Entrar</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" asp-action="Create" asp-controller="Cliente">Cadastrar</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <div>
+        isAdmin key exists: @ViewData.ContainsKey("isAdmin")
+        <br />
+        isAdmin value: @ViewData["isAdmin"]
+    </div>
+
+    <footer>
+        <div class="footer-bottom">
+            <p>copyright &copy;2023 Developed by - <span>GiovanniVINI</span></p>
+        </div>
+        <div class="btn-footer">
+            <a class="text-decoration-none" href="https://www.linkedin.com/feed/?trk=homepage-basic_sign-in-submit"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="https://github.com/GiovanniVINI"><i class="fa-brands fa-github"></i></a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

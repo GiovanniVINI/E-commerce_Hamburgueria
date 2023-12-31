@@ -1,6 +1,8 @@
 ﻿@model Cliente
 
-<form asp-controller="Cliente" asp-action="Create" method="POST">
+<link rel="stylesheet" href="/css/login.css" />
+
+@* <form asp-controller="Cliente" asp-action="Create" method="POST">
     <h2>Cadastrar Cliente</h2>
     <br />
     <div class="form-group">
@@ -28,4 +30,34 @@
     </div>
 
     <button class="btn btn-primary">Cadastrar</button>
-</form>
+</form> *@
+
+<div class="form-container sign-in">
+    <form asp-controller="Cliente" asp-action="Create" method="POST">
+        <h1>Cadastrar</h1>
+
+        <div class="social-icons">
+            <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+            <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+            <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+        <span>ou use email e senha</span>
+        <input asp-for="Nome" class="form-control" placeholder="Nome" />
+        <span asp-validation-for="Nome"></span>
+        <input asp-for="Email" class="form-control" placeholder="Email" />
+        <span asp-validation-for="Email"></span>
+        <input asp-for="Senha" type="password" class="form-control" placeholder="Senha" />
+        <span asp-validation-for="Senha"></span>
+        <input asp-for="Foto" class="form-control" placeholder="Foto" />
+        <span asp-validation-for="Foto"></span>
+        <div class="container-btn-login">
+            <button>Cadastro</button>
+            <button><a asp-action="IndexLogin" asp-controller="Login" class="text-white">Entrar</a></button>
+        </div>
+        @* <div class="buttons text-center">
+        <button class="btn btn-primary"><a asp-action="Create" asp-controller="Cliente" class="text-white" style="text-decoration: none">Cadastro</a></button>
+        <button type="submit" class="btn btn-primary">Login</button>
+        </div> *@
+    </form>
+</div>
